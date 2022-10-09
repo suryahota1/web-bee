@@ -1,0 +1,11 @@
+.attribute-field {
+    display: flex;
+}
+
+.attribute-field .attrb-ip {
+    flex-grow: 1;
+}
+
+.attribute-field .attrb-type {
+    flex-grow: 2;
+}
