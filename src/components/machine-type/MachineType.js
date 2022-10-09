@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { add, remove, update, restore } from "./../../redux/features/machines";
+import { add, restore } from "./../../redux/features/machines";
 import { useParams } from "react-router-dom";
 import MachineItems from "../machine-items/MachineItems";
 import NoPageFound from "../no-page-found/NoPageFound";

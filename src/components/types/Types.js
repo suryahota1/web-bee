@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Types.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { add, remove, update } from "./../../redux/features/templates";
+import { restore } from "./../../redux/features/machines";
 import UtilityService from "../../services/utility-service";
 import MachineTemplate from "../machine-template/MachineTemplate";
 
@@ -10,6 +11,7 @@ function Types () {
     const [ name, setName ] = useState("");
 
     const machines = useSelector((state) => state.template.value);
+    const itemObj = useSelector((state) => state.machine.value);
     console.log("machines types", machines);
     const dispatch = useDispatch();
 
@@ -63,6 +65,30 @@ function Types () {
             if ( cf.id == fieldId ) return { ...cf, type : val };
             else return cf;
         });
+        console.log("itemObj", itemObj);
+
+
+
+        let newObj = {...itemObj};
+        const keys = Object.keys(newObj);
+        for ( let i = 0; i < keys.length; i++ ) {
+            if ( keys[i] == machine.id ) {
+                let ref = newObj[keys[i]];
+                ref = ref.map(( refIndv ) => {
+                    let fields = refIndv["fields"];
+                    fields = fields.map(( fl ) => {
+                        if ( fl.id == fieldId ) return {...fl, type: val, value: ""};
+                        else return fl;
+                    });
+                    console.log("new fields  fields====", fields);
+                    return {...refIndv, fields};
+                });
+                console.log("new ------------ref", ref);
+                newObj[keys[i]] = ref;
+            }
+        }
+        console.log("newObj ==========", newObj);
+        dispatch(restore(newObj));
 
         const newMc = { ...machine, fields };
         dispatch(update(newMc));
@@ -74,6 +100,28 @@ function Types () {
             if ( cf.id == fieldId ) return { ...cf, name : val };
             else return cf;
         });
+
+        let newObj = {...itemObj};
+        const keys = Object.keys(newObj);
+        for ( let i = 0; i < keys.length; i++ ) {
+            if ( keys[i] == machine.id ) {
+                let ref = newObj[keys[i]];
+                ref = ref.map(( refIndv ) => {
+                    let fields = refIndv["fields"];
+                    fields = fields.map(( fl ) => {
+                        if ( fl.id == fieldId ) return {...fl, label: val};
+                        else return fl;
+                    });
+                    console.log("new fields  fields====", fields);
+                    return {...refIndv, fields};
+                });
+                console.log("new ------------ref", ref);
+                newObj[keys[i]] = ref;
+            }
+        }
+        console.log("newObj ==========", newObj);
+        dispatch(restore(newObj));
+
 
         const newMc = { ...machine, fields };
         dispatch(update(newMc));
