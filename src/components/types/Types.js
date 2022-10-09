@@ -31,6 +31,28 @@ function Types () {
         console.log("addField newMc", newMc);
         // newMc.fields.push(newField);
         newMc["trackId"] = UtilityService.generateUUID();
+
+
+        let newObj = {...itemObj};
+        const keys = Object.keys(newObj);
+        for ( let i = 0; i < keys.length; i++ ) {
+            if ( keys[i] == machine.id ) {
+                let ref = newObj[keys[i]];
+                ref = ref.map(( refIndv ) => {
+                    let fields = [...refIndv["fields"], ...UtilityService.getNewInstanceForConfig([newField])];
+                    console.log("new fields  fields====", fields);
+                    return {...refIndv, fields};
+                });
+                console.log("new ------------ref", ref);
+                newObj[keys[i]] = ref;
+            }
+        }
+        console.log("newObj ==========", newObj);
+        dispatch(restore(newObj));
+
+
+
+
         dispatch(update(newMc));
     }
 
@@ -38,6 +60,30 @@ function Types () {
         console.log("===========================", fieldId, machine);
         const newMc = {...machine, fields: machine.fields.filter(( flds ) => flds.id != fieldId)};
         newMc["trackId"] = UtilityService.generateUUID();
+
+
+        let newObj = {...itemObj};
+        const keys = Object.keys(newObj);
+        for ( let i = 0; i < keys.length; i++ ) {
+            if ( keys[i] == machine.id ) {
+                let ref = newObj[keys[i]];
+                ref = ref.map(( refIndv ) => {
+                    let fields = refIndv["fields"];
+                    fields = fields.filter(( fl ) => {
+                        return fl.id != fieldId;
+                    });
+                    console.log("new fields  fields====", fields);
+                    return {...refIndv, fields};
+                });
+                console.log("new ------------ref", ref);
+                newObj[keys[i]] = ref;
+            }
+        }
+        console.log("newObj ==========", newObj);
+        dispatch(restore(newObj));
+
+
+
         dispatch(update(newMc));
     }
 

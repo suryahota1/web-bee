@@ -45,21 +45,6 @@ function MachineTypes () {
         setItems([...items, newVal]);
     }
 
-    // for ( let j = 0; j < ref.length; j++ ) {
-    //     let fields = ref[j]["fields"];
-    //     if ( ref[j]["id"] == val.itemId ) {
-    //         console.log("fields-0-0-0-0-0-0-0-", fields);
-    //         fields = fields.map(( fl ) => {
-    //             if ( fl.id == val.fieldId ) return {...fl, value: val.val};
-    //             else return fl;
-    //         });
-    //         console.log("new fields  fields====", fields);
-    //         ref[j]
-    //     }
-    //     ref = [...ref];
-    //     console.log("new fields  ref====", ref);
-    // }
-
     function onChange ( val ) {
         console.log("val changed ==========", val, typeId);
         console.log("itemList ==========", itemList);
